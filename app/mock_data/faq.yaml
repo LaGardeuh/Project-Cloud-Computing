@@ -1,0 +1,4 @@
+- question: "Comment accéder à l'API ?"
+  answer: "Via les endpoints /api/events, /api/news, /api/faq"
+- question: "Quelle est la durée du cache ?"
+  answer: "60 secondes"

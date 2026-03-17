@@ -1,3 +1,17 @@
-.venv
+# Python
+__pycache__/
+*.py[cod]
+.venv/
 
-.idea
+# Secrets
+.env
+.env.*
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Tests
+.pytest_cache/
+.coverage
