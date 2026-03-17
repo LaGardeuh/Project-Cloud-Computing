@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: content-platform
+data:
+  AZURE_CONTAINER_NAME: "content"
+  CACHE_TTL: "60"
