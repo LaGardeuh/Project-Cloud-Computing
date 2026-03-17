@@ -5,11 +5,14 @@ import yaml
 from flask import Flask, jsonify, render_template_string
 from azure.storage.blob import BlobServiceClient
 
+
 app = Flask(__name__)
+
 
 # --- Cache mémoire simple avec TTL ---
 _cache = {}
 CACHE_TTL = 60  # secondes
+
 
 def get_cached(key, loader_fn):
     now = time.time()
@@ -18,6 +21,7 @@ def get_cached(key, loader_fn):
     data = loader_fn()
     _cache[key] = {"data": data, "ts": now}
     return data
+
 
 # --- Lecture Azure Blob Storage ---
 def load_blob(filename):
@@ -39,26 +43,31 @@ def load_blob(filename):
         return yaml.safe_load(content)
     return json.loads(content)
 
+
 # --- Endpoints API ---
 @app.route("/api/events")
 def events():
     data = get_cached("events", lambda: load_blob("events.json"))
     return jsonify({"items": data})
 
+
 @app.route("/api/news")
 def news():
     data = get_cached("news", lambda: load_blob("news.json"))
     return jsonify({"items": data})
+
 
 @app.route("/api/faq")
 def faq():
     data = get_cached("faq", lambda: load_blob("faq.yaml"))
     return jsonify({"items": data})
 
+
 # --- Health checks ---
 @app.route("/healthz")
 def healthz():
     return jsonify({"status": "healthy"}), 200
+
 
 @app.route("/readyz")
 def readyz():
@@ -67,6 +76,7 @@ def readyz():
         return jsonify({"status": "ready"}), 200
     except Exception as e:
         return jsonify({"status": "not ready", "error": str(e)}), 503
+
 
 # --- Interface web minimale ---
 @app.route("/")
@@ -85,6 +95,7 @@ def index():
     <a href="/readyz">/readyz</a>
     </body></html>
     """)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
