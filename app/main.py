@@ -70,12 +70,9 @@ def healthz():
 
 
 @app.route("/readyz")
+@app.route("/readyz")
 def readyz():
-    try:
-        get_cached("events", lambda: load_blob("events.json"))
-        return jsonify({"status": "ready"}), 200
-    except Exception as e:
-        return jsonify({"status": "not ready", "error": str(e)}), 503
+    return jsonify({"status": "ready"}), 200
 
 
 # --- Interface web minimale ---
