@@ -5,6 +5,10 @@ import yaml
 from flask import Flask, jsonify, render_template_string
 from azure.storage.blob import BlobServiceClient
 
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 app = Flask(__name__)
 
@@ -47,18 +51,21 @@ def load_blob(filename):
 # --- Endpoints API ---
 @app.route("/api/events")
 def events():
+    logger.info("GET /api/events")
     data = get_cached("events", lambda: load_blob("events.json"))
     return jsonify({"items": data})
 
 
 @app.route("/api/news")
 def news():
+    logger.info("GET /api/news")
     data = get_cached("news", lambda: load_blob("news.json"))
     return jsonify({"items": data})
 
 
 @app.route("/api/faq")
 def faq():
+    logger.info("GET /api/faq")
     data = get_cached("faq", lambda: load_blob("faq.yaml"))
     return jsonify({"items": data})
 
