@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch
 from app.main import app
 
-# Données fictives pour les tests (pas besoin d'Azure)
+# Données fictives pour les tests
 MOCK_EVENTS = [{"id": 1, "title": "Conférence IA", "date": "2026-04-15"}]
 MOCK_NEWS   = [{"id": 1, "title": "Lancement", "content": "En ligne."}]
 MOCK_FAQ    = [{"question": "Comment ?", "answer": "Via /api/"}]

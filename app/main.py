@@ -77,7 +77,6 @@ def healthz():
 
 
 @app.route("/readyz")
-@app.route("/readyz")
 def readyz():
     return jsonify({"status": "ready"}), 200
 
